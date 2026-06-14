@@ -1,0 +1,14 @@
+<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- background -->
+  <rect width="64" height="64" rx="14" fill="#1d4ed8"/>
+  <!-- hanger hook -->
+  <path d="M32 14 Q32 8 38 8 Q44 8 44 14" stroke="white" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+  <!-- hanger body -->
+  <path d="M32 14 L12 44 L68 44 Z" stroke="white" stroke-width="3.5" stroke-linejoin="round" fill="none" clip-path="url(#clip)"/>
+  <clipPath id="clip"><rect x="0" y="0" width="64" height="64"/></clipPath>
+  <path d="M32 14 L14 44 L62 44 Z" stroke="white" stroke-width="3" stroke-linejoin="round" fill="none"/>
+  <!-- crossbar -->
+  <line x1="14" y1="44" x2="62" y2="44" stroke="white" stroke-width="3" stroke-linecap="round"/>
+  <!-- accent dot -->
+  <circle cx="56" cy="20" r="6" fill="#93c5fd"/>
+</svg>

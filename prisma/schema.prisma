@@ -1,0 +1,220 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      Role     @default(USER)
+  avatar    String?
+  phone     String?
+  address   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  cart                 Cart?
+  orders               Order[]
+  reviews              Review[]
+  contactMessages      ContactMessage[]
+  savedPaymentMethods  SavedPaymentMethod[]
+  savedAddresses       SavedAddress[]
+
+  @@map("users")
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String
+  slug        String    @unique
+  description String?
+  image       String?   // emoji icon
+  coverImage  String?   // URL รูปภาพหน้าปก
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  products    Product[]
+
+  @@map("categories")
+}
+
+model Product {
+  id           String   @id @default(cuid())
+  name         String
+  slug         String   @unique
+  description  String?
+  price        Float
+  comparePrice Float?
+  images       String[]
+  stock        Int      @default(0)
+  sku          String?  @unique
+  sizes        String[]
+  colors       String[]
+  isActive     Boolean  @default(true)
+  isFeatured   Boolean  @default(false)
+  categoryId   String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  category   Category    @relation(fields: [categoryId], references: [id])
+  cartItems  CartItem[]
+  orderItems OrderItem[]
+  reviews    Review[]
+
+  @@map("products")
+}
+
+model Cart {
+  id        String     @id @default(cuid())
+  userId    String     @unique
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  user  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items CartItem[]
+
+  @@map("carts")
+}
+
+model CartItem {
+  id        String  @id @default(cuid())
+  cartId    String
+  productId String
+  quantity  Int     @default(1)
+  size      String?
+  color     String?
+
+  cart    Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
+
+  @@unique([cartId, productId, size, color])
+  @@map("cart_items")
+}
+
+model Order {
+  id              String        @id @default(cuid())
+  userId          String
+  status          OrderStatus   @default(PENDING)
+  total           Float
+  subtotal        Float
+  shippingCost    Float         @default(0)
+  shippingAddress Json
+  paymentMethod   String?
+  paymentStatus   PaymentStatus @default(UNPAID)
+  notes           String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  user  User        @relation(fields: [userId], references: [id])
+  items OrderItem[]
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  productId String
+  quantity  Int
+  price     Float
+  size      String?
+  color     String?
+
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
+
+  @@map("order_items")
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  rating    Int
+  comment   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user    User    @relation(fields: [userId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  @@unique([userId, productId])
+  @@map("reviews")
+}
+
+model SavedPaymentMethod {
+  id            String   @id @default(cuid())
+  userId        String
+  type          String   // "bank_transfer" | "credit_card"
+  label         String?  // ชื่อที่ผู้ใช้ตั้ง เช่น "บัญชีหลัก"
+  bankName      String?
+  accountNumber String?
+  accountName   String?
+  cardLast4     String?  // เก็บแค่ 4 หลักสุดท้าย
+  cardExpiry    String?  // MM/YY
+  cardBrand     String?  // "visa" | "mastercard"
+  isDefault     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("saved_payment_methods")
+}
+
+model SavedAddress {
+  id          String   @id @default(cuid())
+  userId      String
+  label       String?
+  name        String
+  phone       String
+  address     String
+  subDistrict String
+  district    String
+  province    String
+  postalCode  String
+  isDefault   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("saved_addresses")
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  message   String
+  userId    String?
+  createdAt DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@map("contact_messages")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  UNPAID
+  PAID
+  REFUNDED
+}
