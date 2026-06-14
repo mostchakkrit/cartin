@@ -19,8 +19,8 @@ interface Category {
   id: string;
   name: string;
   slug: string;
-  image?: string;
-  coverImage?: string;
+  image?: string | null;
+  coverImage?: string | null;
 }
 
 export function CategorySlider({ categories }: { categories: Category[] }) {
