@@ -55,7 +55,7 @@ export function CategorySlider({ categories }: { categories: Category[] }) {
       <button
         onClick={() => scroll("left")}
         aria-label="เลื่อนซ้าย"
-        className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-9 h-9 rounded bg-white shadow-[0_4px_12px_rgba(17,17,17,0.08)] border border-[#DFDFDF] flex items-center justify-center text-[#767676] hover:text-[#003399] hover:border-[#003399] transition-all duration-200 ${canLeft ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+        className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-9 h-9 rounded-full bg-white dark:bg-[#131c30] shadow-md border border-gray-100 dark:border-[#253350] flex items-center justify-center text-slate-600 dark:text-[#8aaad4] hover:text-blue-700 dark:hover:text-blue-400 hover:border-blue-200 dark:hover:border-blue-500 transition-all duration-200 ${canLeft ? "opacity-100" : "opacity-0 pointer-events-none"}`}
       >
         <ChevronLeftIcon className="w-4 h-4" />
       </button>
@@ -70,7 +70,7 @@ export function CategorySlider({ categories }: { categories: Category[] }) {
           <Link
             key={cat.id}
             href={`/products?category=${cat.slug}`}
-            className="group relative overflow-hidden rounded bg-[#DFDFDF] flex-shrink-0"
+            className="group relative overflow-hidden rounded-xl bg-slate-200 flex-shrink-0"
             style={{ width: "calc(25% - 9px)", minWidth: 160, aspectRatio: "3/2" }}
           >
             {(() => {
@@ -83,7 +83,7 @@ export function CategorySlider({ categories }: { categories: Category[] }) {
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               ) : (
-                <div className="absolute inset-0 bg-[#003399] flex items-center justify-center text-4xl">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-800 to-blue-600 flex items-center justify-center text-4xl">
                   {cat.image || "🗂️"}
                 </div>
               );
@@ -91,7 +91,7 @@ export function CategorySlider({ categories }: { categories: Category[] }) {
             <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-3.5">
               <p className="text-white font-semibold text-sm leading-tight">{cat.name}</p>
-              <p className="text-[#FFDA1A] text-[10px] mt-1 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+              <p className="text-blue-300 text-[10px] mt-1 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                 ดูสินค้า <ArrowRightIcon className="w-2.5 h-2.5" />
               </p>
             </div>
@@ -103,7 +103,7 @@ export function CategorySlider({ categories }: { categories: Category[] }) {
       <button
         onClick={() => scroll("right")}
         aria-label="เลื่อนขวา"
-        className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-9 h-9 rounded bg-white shadow-[0_4px_12px_rgba(17,17,17,0.08)] border border-[#DFDFDF] flex items-center justify-center text-[#767676] hover:text-[#003399] hover:border-[#003399] transition-all duration-200 ${canRight ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+        className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-9 h-9 rounded-full bg-white dark:bg-[#131c30] shadow-md border border-gray-100 dark:border-[#253350] flex items-center justify-center text-slate-600 dark:text-[#8aaad4] hover:text-blue-700 dark:hover:text-blue-400 hover:border-blue-200 dark:hover:border-blue-500 transition-all duration-200 ${canRight ? "opacity-100" : "opacity-0 pointer-events-none"}`}
       >
         <ChevronRightIcon className="w-4 h-4" />
       </button>

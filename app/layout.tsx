@@ -1,20 +1,14 @@
 import type { Metadata } from "next";
-import { Noto_Sans, Noto_Sans_Thai } from "next/font/google";
+import { Kanit } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
-const notoSans = Noto_Sans({
-  variable: "--font-noto-sans",
-  subsets: ["latin"],
-  weight: ["400", "600", "700"],
-});
-
-const notoSansThai = Noto_Sans_Thai({
-  variable: "--font-noto-sans-thai",
-  subsets: ["thai"],
-  weight: ["400", "600", "700"],
+const kanit = Kanit({
+  variable: "--font-kanit",
+  subsets: ["latin", "thai"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -28,8 +22,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="th" className={`${notoSans.variable} ${notoSansThai.variable} h-full`}>
-      <body className="min-h-full flex flex-col bg-[#F5F5F5] text-[#111111]">
+    <html lang="th" className={`${kanit.variable} h-full antialiased`} suppressHydrationWarning>
+      <body className="min-h-full flex flex-col bg-white dark:bg-[#0b0f1e] text-slate-800 dark:text-[#dde8ff]">
         <Providers>
           <Navbar />
           <main className="flex-1">{children}</main>

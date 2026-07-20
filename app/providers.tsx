@@ -1,27 +1,28 @@
 "use client";
 
 import { SessionProvider } from "next-auth/react";
+import { ThemeProvider } from "next-themes";
 import { Toaster } from "react-hot-toast";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <SessionProvider>
-      {children}
-      <Toaster
-        position="top-right"
-        toastOptions={{
-          duration: 3000,
-          style: {
-            background: "#003399",
-            color: "#fff",
-            borderRadius: "4px",
-            fontSize: "14px",
-            fontWeight: "600",
-          },
-          success: { style: { background: "#0A8A00" } },
-          error: { style: { background: "#CC0008" } },
-        }}
-      />
+      <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+        {children}
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 3000,
+            style: {
+              background: "#1d4ed8",
+              color: "#fff",
+              borderRadius: "8px",
+            },
+            success: { style: { background: "#16a34a" } },
+            error: { style: { background: "#dc2626" } },
+          }}
+        />
+      </ThemeProvider>
     </SessionProvider>
   );
 }

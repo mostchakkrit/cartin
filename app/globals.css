@@ -1,26 +1,38 @@
 @import "tailwindcss";
 
-/* ─── Nordic Yellow Design System ─────────────────── */
+/* Dark mode via .dark class (next-themes) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ─── Light mode ─────────────────────────────────── */
 :root {
-  --ny-primary:    #003399;
-  --ny-primary-h:  #002B80;
-  --ny-secondary:  #FFDA1A;
-  --ny-neutral:    #767676;
-  --ny-bg:         #F5F5F5;
-  --ny-surface:    #FFFFFF;
-  --ny-text:       #111111;
-  --ny-text2:      #484848;
-  --ny-border:     #DFDFDF;
-  --ny-success:    #0A8A00;
-  --ny-warning:    #E87400;
-  --ny-error:      #CC0008;
+  --background: #ffffff;
+  --foreground: #0f172a;
+  --primary: #1d4ed8;
+  --primary-dark: #1e40af;
+}
+
+/* ─── Dark mode — Blue-navy palette ──────────────── */
+/*
+  Level 0 (page):     #0b0f1e  deepest navy
+  Level 1 (surface):  #111827  cards/panels
+  Level 2 (raised):   #1a2540  inputs, elevated
+  Level 3 (high):     #1f2e50  focus/hover
+  Border:             #253350  visible, not harsh
+  Border strong:      #304070  dividers
+  Text 1:             #dde8ff  near-white blue tint
+  Text 2:             #8aaad4  secondary
+  Text 3:             #4e6888  muted
+*/
+.dark {
+  --background: #0b0f1e;
+  --foreground: #dde8ff;
 }
 
 @theme inline {
-  --color-background: var(--ny-bg);
-  --color-foreground: var(--ny-text);
-  --font-sans: var(--font-noto-sans);
-  --font-mono: var(--font-jetbrains-mono);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-kanit);
+  --font-mono: var(--font-geist-mono);
 }
 
 html {
@@ -28,11 +40,12 @@ html {
 }
 
 body {
-  background: var(--ny-bg);
-  color: var(--ny-text);
-  font-family: var(--font-noto-sans), var(--font-noto-sans-thai), 'Helvetica Neue', Arial, sans-serif;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-kanit), 'Helvetica Neue', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 * {
@@ -40,8 +53,8 @@ body {
 }
 
 ::selection {
-  background: var(--ny-secondary);
-  color: var(--ny-text);
+  background: #bfdbfe;
+  color: #1e3a8a;
 }
 
 button, a, [role="button"], select, label[for] {
@@ -51,8 +64,8 @@ button, a, [role="button"], select, label[for] {
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--ny-border); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--ny-neutral); }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
 .line-clamp-1 {
   display: -webkit-box;
@@ -75,61 +88,20 @@ button, a, [role="button"], select, label[for] {
   overflow: hidden;
 }
 
+@keyframes scroll-bounce {
+  0%, 100% { opacity: 0.4; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(6px); }
+}
+
+.animate-scroll-bounce {
+  animation: scroll-bounce 1.8s ease-in-out infinite;
+}
+
 @keyframes fade-up {
-  from { opacity: 0; transform: translateY(16px); }
+  from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fade-up {
-  animation: fade-up 0.2s ease-out forwards;
-}
-
-/* ─── Dark Mode ──────────────────────────────────────── */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --ny-bg:      #111827;
-    --ny-surface: #1f2937;
-    --ny-text:    #f1f5f9;
-    --ny-text2:   #cbd5e1;
-    --ny-border:  #374151;
-    --ny-neutral: #94a3b8;
-  }
-
-  body { background: #111827; color: #f1f5f9; }
-
-  /* ── Surfaces ── */
-  .bg-white          { background-color: #1f2937; }
-  .bg-\[\#F5F5F5\]   { background-color: #111827; }
-
-  /* ── Text ── */
-  .text-\[\#111111\] { color: #f1f5f9; }
-  .text-\[\#484848\] { color: #cbd5e1; }
-  .text-\[\#767676\] { color: #94a3b8; }
-  /* primary blue is too dark on dark bg — lighten it */
-  .text-\[\#003399\] { color: #6699ff; }
-
-  /* ── Borders & dividers ── */
-  .border-\[\#DFDFDF\] { border-color: #374151; }
-  .divide-\[\#DFDFDF\] > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
-  .border-t.border-\[\#DFDFDF\] { border-color: #374151; }
-
-  /* ── Input fields ── */
-  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
-  textarea,
-  select {
-    background-color: #1f2937;
-    color: #f1f5f9;
-    border-color: #374151;
-  }
-  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):focus,
-  textarea:focus,
-  select:focus {
-    background-color: #111827;
-  }
-
-  /* ── Hover rows / cells ── */
-  .hover\:bg-\[\#F5F5F5\]:hover { background-color: #1f2937; }
-
-  /* ── Scrollbar ── */
-  ::-webkit-scrollbar-thumb { background: #374151; }
+  animation: fade-up 0.6s ease-out forwards;
 }
