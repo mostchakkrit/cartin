@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Noto_Sans } from "next/font/google";
+import { Noto_Sans, Noto_Sans_Thai } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { Navbar } from "@/components/Navbar";
@@ -8,6 +8,12 @@ import { Footer } from "@/components/Footer";
 const notoSans = Noto_Sans({
   variable: "--font-noto-sans",
   subsets: ["latin"],
+  weight: ["400", "600", "700"],
+});
+
+const notoSansThai = Noto_Sans_Thai({
+  variable: "--font-noto-sans-thai",
+  subsets: ["thai"],
   weight: ["400", "600", "700"],
 });
 
@@ -22,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="th" className={`${notoSans.variable} h-full`}>
+    <html lang="th" className={`${notoSans.variable} ${notoSansThai.variable} h-full`}>
       <body className="min-h-full flex flex-col bg-[#F5F5F5] text-[#111111]">
         <Providers>
           <Navbar />

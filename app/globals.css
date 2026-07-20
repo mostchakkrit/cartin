@@ -30,7 +30,7 @@ html {
 body {
   background: var(--ny-bg);
   color: var(--ny-text);
-  font-family: var(--font-noto-sans), 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--font-noto-sans), var(--font-noto-sans-thai), 'Helvetica Neue', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -82,4 +82,54 @@ button, a, [role="button"], select, label[for] {
 
 .animate-fade-up {
   animation: fade-up 0.2s ease-out forwards;
+}
+
+/* ─── Dark Mode ──────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ny-bg:      #111827;
+    --ny-surface: #1f2937;
+    --ny-text:    #f1f5f9;
+    --ny-text2:   #cbd5e1;
+    --ny-border:  #374151;
+    --ny-neutral: #94a3b8;
+  }
+
+  body { background: #111827; color: #f1f5f9; }
+
+  /* ── Surfaces ── */
+  .bg-white          { background-color: #1f2937; }
+  .bg-\[\#F5F5F5\]   { background-color: #111827; }
+
+  /* ── Text ── */
+  .text-\[\#111111\] { color: #f1f5f9; }
+  .text-\[\#484848\] { color: #cbd5e1; }
+  .text-\[\#767676\] { color: #94a3b8; }
+  /* primary blue is too dark on dark bg — lighten it */
+  .text-\[\#003399\] { color: #6699ff; }
+
+  /* ── Borders & dividers ── */
+  .border-\[\#DFDFDF\] { border-color: #374151; }
+  .divide-\[\#DFDFDF\] > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  .border-t.border-\[\#DFDFDF\] { border-color: #374151; }
+
+  /* ── Input fields ── */
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+  textarea,
+  select {
+    background-color: #1f2937;
+    color: #f1f5f9;
+    border-color: #374151;
+  }
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):focus,
+  textarea:focus,
+  select:focus {
+    background-color: #111827;
+  }
+
+  /* ── Hover rows / cells ── */
+  .hover\:bg-\[\#F5F5F5\]:hover { background-color: #1f2937; }
+
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar-thumb { background: #374151; }
 }
