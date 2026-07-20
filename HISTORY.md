@@ -698,3 +698,48 @@ npm run dev
 | `app/api/categories/[id]/route.ts` | DELETE: cascade ลบ reviews/cartItems/orderItems/products ก่อนลบ category |
 | `package.json` | `"build": "prisma generate && next build"` |
 | `.gitignore` | เพิ่ม `.claude/` |
+
+## Session 24 — 2026-07-20
+
+### สิ่งที่เปลี่ยนแปลง
+
+- **[UI]** Redesign ทั้งโปรเจคให้ตรงกับ Nordic Yellow Design System
+  - Primary: `#003399` (IKEA Blue), Secondary: `#FFDA1A` (IKEA Yellow)
+  - Background: `#F5F5F5`, Text: `#111111`, Border: `#DFDFDF`, Neutral: `#767676`
+  - Semantic: Success `#0A8A00`, Warning `#E87400`, Error `#CC0008`
+  - ลบ dark mode ออกทั้งหมด (ลบ `dark:` Tailwind classes ทุกที่)
+  - Border radius: `rounded` (4px) แทน `rounded-xl`, `rounded-2xl`, `rounded-full`
+  - Container: `max-w-[1400px]` แทน `max-w-7xl`
+  - Typography: Noto Sans (กำหนดใน globals.css)
+  - Card shadows: Level 1–3 ใช้ `rgba(17,17,17, ...)` แทน generic shadows
+
+### ไฟล์ที่แก้ไข
+
+| ไฟล์ | การเปลี่ยนแปลง |
+|---|---|
+| `app/globals.css` | CSS custom properties Nordic Yellow, Noto Sans font |
+| `app/layout.tsx` | ลบ ThemeProvider, ใช้ Noto Sans, ลบ dark mode |
+| `app/providers.tsx` | ลบ ThemeProvider |
+| `components/Navbar.tsx` | Nordic Yellow colors, ลบ dark mode |
+| `components/Footer.tsx` | Nordic Yellow colors, ลบ dark mode |
+| `components/ProductCard.tsx` | Nordic Yellow colors, ลบ dark mode |
+| `components/CategorySlider.tsx` | Nordic Yellow colors, ลบ dark mode |
+| `app/page.tsx` | Hero + promo banner + brand bar → Nordic Yellow |
+| `app/login/page.tsx` | Form + inputs → Nordic Yellow, ลบ dark mode |
+| `app/register/page.tsx` | Form + password strength → Nordic Yellow, ลบ dark mode |
+| `app/products/page.tsx` | Filters + pagination + skeleton → Nordic Yellow |
+| `app/products/[slug]/page.tsx` | Product detail + reviews + rating → Nordic Yellow, ลบ dark mode |
+| `app/search/page.tsx` | Search form + trending + categories → Nordic Yellow, ลบ dark mode |
+| `app/cart/page.tsx` | Cart items + summary + shipping bar → Nordic Yellow |
+| `app/checkout/page.tsx` | All form sections + payment → Nordic Yellow |
+| `app/orders/page.tsx` | Order cards + STATUS_CONFIG → Nordic Yellow |
+| `app/orders/[id]/page.tsx` | Status tracker + info cards → Nordic Yellow |
+| `app/profile/page.tsx` | Avatar card + form → Nordic Yellow |
+| `app/contact/page.tsx` | Info cards + FAQ + form → Nordic Yellow |
+| `app/addresses/page.tsx` | Address cards + modal form → Nordic Yellow, ลบ dark mode |
+| `app/payment-methods/page.tsx` | Method cards + modal form → Nordic Yellow, ลบ dark mode |
+| `app/admin/page.tsx` | Dashboard header + stats + quick actions → Nordic Yellow |
+| `app/admin/products/page.tsx` | Table + modal form → Nordic Yellow |
+| `app/admin/orders/page.tsx` | Table + STATUS_COLORS → Nordic Yellow |
+| `app/admin/categories/page.tsx` | Cards + modal form → Nordic Yellow |
+| `app/admin/users/page.tsx` | Table + role badges → Nordic Yellow |

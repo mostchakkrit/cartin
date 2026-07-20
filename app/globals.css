@@ -1,38 +1,26 @@
 @import "tailwindcss";
 
-/* Dark mode via .dark class (next-themes) */
-@custom-variant dark (&:where(.dark, .dark *));
-
-/* ─── Light mode ─────────────────────────────────── */
+/* ─── Nordic Yellow Design System ─────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #0f172a;
-  --primary: #1d4ed8;
-  --primary-dark: #1e40af;
-}
-
-/* ─── Dark mode — Blue-navy palette ──────────────── */
-/*
-  Level 0 (page):     #0b0f1e  deepest navy
-  Level 1 (surface):  #111827  cards/panels
-  Level 2 (raised):   #1a2540  inputs, elevated
-  Level 3 (high):     #1f2e50  focus/hover
-  Border:             #253350  visible, not harsh
-  Border strong:      #304070  dividers
-  Text 1:             #dde8ff  near-white blue tint
-  Text 2:             #8aaad4  secondary
-  Text 3:             #4e6888  muted
-*/
-.dark {
-  --background: #0b0f1e;
-  --foreground: #dde8ff;
+  --ny-primary:    #003399;
+  --ny-primary-h:  #002B80;
+  --ny-secondary:  #FFDA1A;
+  --ny-neutral:    #767676;
+  --ny-bg:         #F5F5F5;
+  --ny-surface:    #FFFFFF;
+  --ny-text:       #111111;
+  --ny-text2:      #484848;
+  --ny-border:     #DFDFDF;
+  --ny-success:    #0A8A00;
+  --ny-warning:    #E87400;
+  --ny-error:      #CC0008;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-kanit);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--ny-bg);
+  --color-foreground: var(--ny-text);
+  --font-sans: var(--font-noto-sans);
+  --font-mono: var(--font-jetbrains-mono);
 }
 
 html {
@@ -40,12 +28,11 @@ html {
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-kanit), 'Helvetica Neue', Arial, sans-serif;
+  background: var(--ny-bg);
+  color: var(--ny-text);
+  font-family: var(--font-noto-sans), 'Helvetica Neue', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 * {
@@ -53,8 +40,8 @@ body {
 }
 
 ::selection {
-  background: #bfdbfe;
-  color: #1e3a8a;
+  background: var(--ny-secondary);
+  color: var(--ny-text);
 }
 
 button, a, [role="button"], select, label[for] {
@@ -64,8 +51,8 @@ button, a, [role="button"], select, label[for] {
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }
-::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+::-webkit-scrollbar-thumb { background: var(--ny-border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--ny-neutral); }
 
 .line-clamp-1 {
   display: -webkit-box;
@@ -88,20 +75,11 @@ button, a, [role="button"], select, label[for] {
   overflow: hidden;
 }
 
-@keyframes scroll-bounce {
-  0%, 100% { opacity: 0.4; transform: translateY(0); }
-  50% { opacity: 1; transform: translateY(6px); }
-}
-
-.animate-scroll-bounce {
-  animation: scroll-bounce 1.8s ease-in-out infinite;
-}
-
 @keyframes fade-up {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fade-up {
-  animation: fade-up 0.6s ease-out forwards;
+  animation: fade-up 0.2s ease-out forwards;
 }

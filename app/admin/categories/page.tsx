@@ -75,15 +75,18 @@ export default function AdminCategoriesPage() {
     else toast.error("เกิดข้อผิดพลาด");
   };
 
-  const inputClass = "w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500";
+  const inputClass = "w-full px-3 py-2.5 border border-[#DFDFDF] rounded text-sm focus:outline-none focus:ring-2 focus:ring-[#003399] bg-[#F5F5F5] focus:bg-white transition-colors";
 
-  if (loading) return <div className="flex justify-center py-20"><div className="animate-spin w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full" /></div>;
+  if (loading) return <div className="flex justify-center py-20"><div className="animate-spin w-8 h-8 border-4 border-[#003399] border-t-transparent rounded-full" /></div>;
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-slate-800">จัดการหมวดหมู่</h1>
-        <button onClick={() => { resetForm(); setShowForm(true); }} className="flex items-center gap-2 px-5 py-2.5 bg-blue-700 text-white font-medium rounded-xl hover:bg-blue-800 transition-colors">
+        <div>
+          <p className="text-xs text-[#003399] font-semibold tracking-[0.2em] uppercase mb-1">Admin</p>
+          <h1 className="text-3xl font-bold text-[#111111]">จัดการหมวดหมู่</h1>
+        </div>
+        <button onClick={() => { resetForm(); setShowForm(true); }} className="flex items-center gap-2 px-5 py-2.5 bg-[#003399] text-white font-semibold rounded hover:bg-[#002B80] transition-colors">
           <PlusIcon className="w-4 h-4" /> เพิ่มหมวดหมู่
         </button>
       </div>
@@ -91,50 +94,46 @@ export default function AdminCategoriesPage() {
       {/* Modal */}
       {showForm && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={resetForm}>
-          <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-white rounded p-6 w-full max-w-md shadow-[0_8px_24px_rgba(17,17,17,0.12)]" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-5">
-              <h2 className="text-xl font-bold">{editCat ? "แก้ไขหมวดหมู่" : "เพิ่มหมวดหมู่"}</h2>
-              <button onClick={resetForm} className="text-gray-400 hover:text-gray-600"><XMarkIcon className="w-5 h-5" /></button>
+              <h2 className="text-xl font-bold text-[#111111]">{editCat ? "แก้ไขหมวดหมู่" : "เพิ่มหมวดหมู่"}</h2>
+              <button onClick={resetForm} className="text-[#767676] hover:text-[#111111]"><XMarkIcon className="w-5 h-5" /></button>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Name */}
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">ชื่อหมวดหมู่ <span className="text-red-400">*</span></label>
+                <label className="block text-sm font-semibold text-[#484848] mb-1">ชื่อหมวดหมู่ <span className="text-[#CC0008]">*</span></label>
                 <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required className={inputClass} placeholder="เช่น เสื้อผ้าผู้หญิง" />
               </div>
 
-              {/* Description */}
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">คำอธิบาย</label>
+                <label className="block text-sm font-semibold text-[#484848] mb-1">คำอธิบาย</label>
                 <input value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className={inputClass} placeholder="คำอธิบายสั้นๆ" />
               </div>
 
-              {/* Cover image URL */}
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">URL รูปภาพหน้าปก</label>
+                <label className="block text-sm font-semibold text-[#484848] mb-1">URL รูปภาพหน้าปก</label>
                 <input value={form.coverImage} onChange={(e) => setForm({ ...form, coverImage: e.target.value })} className={inputClass} placeholder="https://images.unsplash.com/..." />
                 {form.coverImage && form.coverImage.startsWith("http") && (
-                  <div className="mt-2 relative rounded-xl overflow-hidden bg-gray-100" style={{ height: 80 }}>
+                  <div className="mt-2 relative rounded overflow-hidden bg-[#F5F5F5]" style={{ height: 80 }}>
                     <Image src={form.coverImage} alt="preview" fill className="object-cover" onError={() => {}} />
                   </div>
                 )}
               </div>
 
-              {/* Emoji */}
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">ไอคอน Emoji (แสดงเมื่อไม่มีรูป)</label>
+                <label className="block text-sm font-semibold text-[#484848] mb-1">ไอคอน Emoji (แสดงเมื่อไม่มีรูป)</label>
                 <div className="relative flex items-center gap-2">
                   <button
                     type="button"
                     onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                    className="flex items-center gap-3 px-4 py-2.5 border border-gray-200 rounded-xl hover:border-blue-400 transition-colors flex-1 text-left"
+                    className="flex items-center gap-3 px-4 py-2.5 border border-[#DFDFDF] rounded hover:border-[#003399] transition-colors flex-1 text-left bg-[#F5F5F5]"
                   >
                     <span className="text-2xl">{form.image || "🗂️"}</span>
-                    <span className="text-sm text-gray-500">{form.image ? "คลิกเพื่อเปลี่ยน" : "คลิกเพื่อเลือก Emoji"}</span>
+                    <span className="text-sm text-[#767676]">{form.image ? "คลิกเพื่อเปลี่ยน" : "คลิกเพื่อเลือก Emoji"}</span>
                   </button>
                   {form.image && (
-                    <button type="button" onClick={() => setForm({ ...form, image: "" })} className="p-2 text-gray-300 hover:text-red-400 flex-shrink-0">
+                    <button type="button" onClick={() => setForm({ ...form, image: "" })} className="p-2 text-[#DFDFDF] hover:text-[#CC0008] flex-shrink-0">
                       <XMarkIcon className="w-4 h-4" />
                     </button>
                   )}
@@ -155,8 +154,8 @@ export default function AdminCategoriesPage() {
               </div>
 
               <div className="flex gap-3 pt-2">
-                <button type="submit" className="flex-1 py-2.5 bg-blue-700 text-white font-medium rounded-xl hover:bg-blue-800 transition-colors">บันทึก</button>
-                <button type="button" onClick={resetForm} className="flex-1 py-2.5 border border-gray-200 rounded-xl hover:bg-gray-50 text-sm">ยกเลิก</button>
+                <button type="submit" className="flex-1 py-2.5 bg-[#003399] text-white font-semibold rounded hover:bg-[#002B80] transition-colors">บันทึก</button>
+                <button type="button" onClick={resetForm} className="flex-1 py-2.5 border border-[#DFDFDF] rounded hover:bg-[#F5F5F5] text-sm">ยกเลิก</button>
               </div>
             </form>
           </div>
@@ -168,29 +167,27 @@ export default function AdminCategoriesPage() {
         {categories.map((cat) => {
           const hasCover = cat.coverImage?.startsWith("http");
           return (
-            <div key={cat.id} className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
-              {/* Cover image area */}
-              <div className="relative bg-gradient-to-br from-blue-100 to-blue-50" style={{ height: 100 }}>
+            <div key={cat.id} className="bg-white border border-[#DFDFDF] rounded overflow-hidden shadow-[0_1px_3px_rgba(17,17,17,0.06)]">
+              <div className="relative bg-[#DFDFDF]" style={{ height: 100 }}>
                 {hasCover ? (
                   <Image src={cat.coverImage} alt={cat.name} fill className="object-cover" />
                 ) : (
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-800 to-blue-600 flex items-center justify-center text-4xl">
+                  <div className="absolute inset-0 bg-[#003399] flex items-center justify-center text-4xl">
                     {cat.image || "🗂️"}
                   </div>
                 )}
                 <div className="absolute top-2 right-2 flex gap-1">
-                  <button onClick={() => openEdit(cat)} className="p-1.5 bg-white/90 text-blue-600 hover:bg-white rounded-lg shadow-sm"><PencilIcon className="w-3.5 h-3.5" /></button>
-                  <button onClick={() => handleDelete(cat.id, cat.name)} className="p-1.5 bg-white/90 text-red-500 hover:bg-white rounded-lg shadow-sm"><TrashIcon className="w-3.5 h-3.5" /></button>
+                  <button onClick={() => openEdit(cat)} className="p-1.5 bg-white/90 text-[#003399] hover:bg-white rounded shadow-sm"><PencilIcon className="w-3.5 h-3.5" /></button>
+                  <button onClick={() => handleDelete(cat.id, cat.name)} className="p-1.5 bg-white/90 text-[#CC0008] hover:bg-white rounded shadow-sm"><TrashIcon className="w-3.5 h-3.5" /></button>
                 </div>
               </div>
-              {/* Info */}
               <div className="p-4">
                 <div className="flex items-center gap-2 mb-0.5">
                   {cat.image && <span className="text-lg">{cat.image}</span>}
-                  <p className="font-bold text-slate-800">{cat.name}</p>
+                  <p className="font-bold text-[#111111]">{cat.name}</p>
                 </div>
-                {cat.description && <p className="text-xs text-gray-500 mt-1 line-clamp-1">{cat.description}</p>}
-                <p className="text-xs text-gray-400 mt-2">{cat._count?.products || 0} สินค้า</p>
+                {cat.description && <p className="text-xs text-[#767676] mt-1 line-clamp-1">{cat.description}</p>}
+                <p className="text-xs text-[#767676] mt-2">{cat._count?.products || 0} สินค้า</p>
               </div>
             </div>
           );

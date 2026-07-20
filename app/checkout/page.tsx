@@ -82,7 +82,6 @@ export default function CheckoutPage() {
     if (items.length === 0) { toast.error("ตะกร้าว่างเปล่า"); return; }
     if (!form.province || !form.district || !form.subDistrict) { toast.error("กรุณาเลือกจังหวัด อำเภอ และตำบล"); return; }
 
-    // Save payment if requested
     if (form.savePayment && !useSaved) {
       const payload: Record<string, unknown> = { type: form.paymentMethod, label: form.paymentLabel || undefined };
       if (form.paymentMethod === "bank_transfer") {
@@ -119,53 +118,55 @@ export default function CheckoutPage() {
     }
   };
 
-  const inputClass = "w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm";
+  const inputClass = "w-full px-4 py-2.5 border border-[#DFDFDF] rounded focus:outline-none focus:ring-2 focus:ring-[#003399] text-sm bg-[#F5F5F5] focus:bg-white transition-colors";
 
-  if (status === "loading") return <div className="flex justify-center py-20"><div className="animate-spin w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full" /></div>;
+  if (status === "loading") return <div className="flex justify-center py-20"><div className="animate-spin w-8 h-8 border-4 border-[#003399] border-t-transparent rounded-full" /></div>;
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <h1 className="text-3xl font-bold text-slate-800 mb-8">ชำระเงิน</h1>
+      <div className="mb-8">
+        <p className="text-xs text-[#003399] font-semibold tracking-[0.2em] uppercase mb-1">Order</p>
+        <h1 className="text-3xl font-bold text-[#111111]">ชำระเงิน</h1>
+      </div>
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-6">
 
             {/* Shipping */}
-            <div className="bg-white border border-gray-100 rounded-2xl p-6">
-              <h2 className="font-bold text-slate-800 mb-4">ที่อยู่จัดส่ง</h2>
+            <div className="bg-white border border-[#DFDFDF] rounded p-6 shadow-[0_1px_3px_rgba(17,17,17,0.06)]">
+              <h2 className="font-bold text-[#111111] mb-4">ที่อยู่จัดส่ง</h2>
 
-              {/* Saved addresses */}
               {savedAddresses.length > 0 && (
-                <div className="mb-4 p-4 bg-blue-50 rounded-xl">
-                  <p className="text-xs font-semibold text-blue-700 mb-2">ที่อยู่ที่บันทึกไว้</p>
+                <div className="mb-4 p-4 bg-[#F5F5F5] border border-[#DFDFDF] rounded">
+                  <p className="text-xs font-semibold text-[#003399] mb-2">ที่อยู่ที่บันทึกไว้</p>
                   <div className="space-y-2">
                     {savedAddresses.map((a) => (
-                      <label key={a.id} className={`flex items-start gap-3 p-3 border rounded-xl cursor-pointer transition-colors ${useSavedAddress === a.id ? "border-blue-600 bg-white" : "border-blue-200 bg-white/60 hover:border-blue-400"}`}>
-                        <input type="radio" checked={useSavedAddress === a.id} onChange={() => handleUseSavedAddress(a)} className="text-blue-600 mt-0.5" />
+                      <label key={a.id} className={`flex items-start gap-3 p-3 border rounded cursor-pointer transition-colors bg-white ${useSavedAddress === a.id ? "border-[#003399]" : "border-[#DFDFDF] hover:border-[#003399]"}`}>
+                        <input type="radio" checked={useSavedAddress === a.id} onChange={() => handleUseSavedAddress(a)} className="mt-0.5 accent-[#003399]" />
                         <div className="text-sm min-w-0">
-                          <p className="font-medium text-slate-700">{a.label || a.name}</p>
-                          <p className="text-gray-400 text-xs">{a.name} · {a.phone}</p>
-                          <p className="text-gray-400 text-xs truncate">{a.address} ต.{a.subDistrict} อ.{a.district} จ.{a.province} {a.postalCode}</p>
+                          <p className="font-semibold text-[#111111]">{a.label || a.name}</p>
+                          <p className="text-[#767676] text-xs">{a.name} · {a.phone}</p>
+                          <p className="text-[#767676] text-xs truncate">{a.address} ต.{a.subDistrict} อ.{a.district} จ.{a.province} {a.postalCode}</p>
                         </div>
-                        {a.isDefault && <span className="ml-auto text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full whitespace-nowrap">ค่าเริ่มต้น</span>}
+                        {a.isDefault && <span className="ml-auto text-xs bg-[#003399]/10 text-[#003399] px-2 py-0.5 rounded whitespace-nowrap">ค่าเริ่มต้น</span>}
                       </label>
                     ))}
-                    <button type="button" onClick={() => { setUseSavedAddress(""); setForm(f => ({ ...f, name: session?.user.name ?? "", phone: "", address: "", subDistrict: "", district: "", province: "", postalCode: "" })); }} className="text-xs text-blue-600 hover:underline pl-1">+ กรอกที่อยู่ใหม่</button>
+                    <button type="button" onClick={() => { setUseSavedAddress(""); setForm(f => ({ ...f, name: session?.user.name ?? "", phone: "", address: "", subDistrict: "", district: "", province: "", postalCode: "" })); }} className="text-xs text-[#003399] hover:underline pl-1">+ กรอกที่อยู่ใหม่</button>
                   </div>
                 </div>
               )}
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">ชื่อผู้รับ <span className="text-red-400">*</span></label>
+                  <label className="block text-sm font-semibold text-[#484848] mb-1">ชื่อผู้รับ <span className="text-[#CC0008]">*</span></label>
                   <input type="text" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required className={inputClass} />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">เบอร์โทรศัพท์ <span className="text-red-400">*</span></label>
+                  <label className="block text-sm font-semibold text-[#484848] mb-1">เบอร์โทรศัพท์ <span className="text-[#CC0008]">*</span></label>
                   <input type="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value.replace(/\D/g, "").slice(0, 10) })} required maxLength={10} inputMode="numeric" className={inputClass} />
                 </div>
                 <div className="sm:col-span-2">
-                  <label className="block text-sm font-medium text-slate-700 mb-1">บ้านเลขที่ / ถนน / ซอย <span className="text-red-400">*</span></label>
+                  <label className="block text-sm font-semibold text-[#484848] mb-1">บ้านเลขที่ / ถนน / ซอย <span className="text-[#CC0008]">*</span></label>
                   <input type="text" value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} required maxLength={100} className={inputClass} />
                 </div>
               </div>
@@ -176,58 +177,54 @@ export default function CheckoutPage() {
             </div>
 
             {/* Payment */}
-            <div className="bg-white border border-gray-100 rounded-2xl p-6">
-              <h2 className="font-bold text-slate-800 mb-4">วิธีชำระเงิน</h2>
+            <div className="bg-white border border-[#DFDFDF] rounded p-6 shadow-[0_1px_3px_rgba(17,17,17,0.06)]">
+              <h2 className="font-bold text-[#111111] mb-4">วิธีชำระเงิน</h2>
 
-              {/* Saved methods */}
               {savedMethods.length > 0 && (
-                <div className="mb-4 p-4 bg-blue-50 rounded-xl">
-                  <p className="text-xs font-semibold text-blue-700 mb-2">วิธีชำระที่บันทึกไว้</p>
+                <div className="mb-4 p-4 bg-[#F5F5F5] border border-[#DFDFDF] rounded">
+                  <p className="text-xs font-semibold text-[#003399] mb-2">วิธีชำระที่บันทึกไว้</p>
                   <div className="space-y-2">
                     {savedMethods.map((m) => (
-                      <label key={m.id} className={`flex items-center gap-3 p-3 border rounded-xl cursor-pointer transition-colors ${useSaved === m.id ? "border-blue-600 bg-white" : "border-blue-200 bg-white/60 hover:border-blue-400"}`}>
-                        <input type="radio" checked={useSaved === m.id} onChange={() => handleUseSaved(m)} className="text-blue-600" />
+                      <label key={m.id} className={`flex items-center gap-3 p-3 border rounded cursor-pointer transition-colors bg-white ${useSaved === m.id ? "border-[#003399]" : "border-[#DFDFDF] hover:border-[#003399]"}`}>
+                        <input type="radio" checked={useSaved === m.id} onChange={() => handleUseSaved(m)} className="accent-[#003399]" />
                         {m.type === "bank_transfer" && m.bankName && <BankIcon bankId={m.bankName} size={28} />}
                         {m.type === "credit_card" && (m.cardBrand === "visa" ? <VisaIcon size={24} /> : <MastercardIcon size={24} />)}
                         <div className="text-sm">
-                          <p className="font-medium text-slate-700">{m.label || (m.type === "bank_transfer" ? "โอนธนาคาร" : "บัตรเครดิต")}</p>
-                          <p className="text-gray-400 text-xs">{m.type === "bank_transfer" ? `${BANKS.find(b=>b.id===m.bankName)?.name} ···${m.accountNumber?.slice(-4)}` : `···· ${m.cardLast4}  ${m.cardExpiry}`}</p>
+                          <p className="font-semibold text-[#111111]">{m.label || (m.type === "bank_transfer" ? "โอนธนาคาร" : "บัตรเครดิต")}</p>
+                          <p className="text-[#767676] text-xs">{m.type === "bank_transfer" ? `${BANKS.find(b=>b.id===m.bankName)?.name} ···${m.accountNumber?.slice(-4)}` : `···· ${m.cardLast4}  ${m.cardExpiry}`}</p>
                         </div>
-                        {m.isDefault && <span className="ml-auto text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full">ค่าเริ่มต้น</span>}
+                        {m.isDefault && <span className="ml-auto text-xs bg-[#003399]/10 text-[#003399] px-2 py-0.5 rounded">ค่าเริ่มต้น</span>}
                       </label>
                     ))}
-                    <button type="button" onClick={() => { setUseSaved(""); setForm(f => ({ ...f, paymentMethod: "cod", bankName: "", accountNumber: "", accountName: "", cardNumber: "", cardExpiry: "", cardCvv: "" })); }} className="text-xs text-blue-600 hover:underline pl-1">+ ใช้วิธีชำระใหม่</button>
+                    <button type="button" onClick={() => { setUseSaved(""); setForm(f => ({ ...f, paymentMethod: "cod", bankName: "", accountNumber: "", accountName: "", cardNumber: "", cardExpiry: "", cardCvv: "" })); }} className="text-xs text-[#003399] hover:underline pl-1">+ ใช้วิธีชำระใหม่</button>
                   </div>
                 </div>
               )}
 
-              {/* Payment method selector */}
               {!useSaved && (
                 <div className="space-y-3">
-                  {/* COD */}
-                  <label className={`flex items-center gap-3 p-4 border rounded-xl cursor-pointer transition-colors ${form.paymentMethod === "cod" ? "border-blue-600 bg-blue-50" : "border-gray-200 hover:border-blue-300"}`}>
-                    <input type="radio" value="cod" checked={form.paymentMethod === "cod"} onChange={() => setForm({ ...form, paymentMethod: "cod" })} />
+                  <label className={`flex items-center gap-3 p-4 border rounded cursor-pointer transition-colors ${form.paymentMethod === "cod" ? "border-[#003399] bg-[#003399]/5" : "border-[#DFDFDF] hover:border-[#003399]"}`}>
+                    <input type="radio" value="cod" checked={form.paymentMethod === "cod"} onChange={() => setForm({ ...form, paymentMethod: "cod" })} className="accent-[#003399]" />
                     <CodIcon size={28} />
-                    <span className="text-sm font-medium">เก็บเงินปลายทาง (COD)</span>
+                    <span className="text-sm font-semibold">เก็บเงินปลายทาง (COD)</span>
                   </label>
 
-                  {/* Bank Transfer */}
-                  <div className={`border rounded-xl transition-colors ${form.paymentMethod === "bank_transfer" ? "border-blue-600" : "border-gray-200"}`}>
-                    <label className={`flex items-center gap-3 p-4 cursor-pointer ${form.paymentMethod === "bank_transfer" ? "bg-blue-50 rounded-t-xl" : "hover:bg-gray-50 rounded-xl"}`}>
-                      <input type="radio" value="bank_transfer" checked={form.paymentMethod === "bank_transfer"} onChange={() => setForm({ ...form, paymentMethod: "bank_transfer" })} />
+                  <div className={`border rounded transition-colors ${form.paymentMethod === "bank_transfer" ? "border-[#003399]" : "border-[#DFDFDF]"}`}>
+                    <label className={`flex items-center gap-3 p-4 cursor-pointer ${form.paymentMethod === "bank_transfer" ? "bg-[#003399]/5 rounded-t" : "hover:bg-[#F5F5F5] rounded"}`}>
+                      <input type="radio" value="bank_transfer" checked={form.paymentMethod === "bank_transfer"} onChange={() => setForm({ ...form, paymentMethod: "bank_transfer" })} className="accent-[#003399]" />
                       <div className="flex gap-1.5">
                         {["kbank", "scb", "bbl", "ktb"].map((b) => <BankIcon key={b} bankId={b} size={24} />)}
                       </div>
-                      <span className="text-sm font-medium">โอนเงินผ่านธนาคาร</span>
+                      <span className="text-sm font-semibold">โอนเงินผ่านธนาคาร</span>
                     </label>
                     {form.paymentMethod === "bank_transfer" && (
                       <div className="px-4 pb-4 space-y-3">
                         <div>
-                          <label className="block text-xs font-medium text-slate-600 mb-1">ธนาคาร</label>
+                          <label className="block text-xs font-semibold text-[#484848] mb-1">ธนาคาร</label>
                           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                             {BANKS.map((b) => (
                               <button key={b.id} type="button" onClick={() => setForm({ ...form, bankName: b.id })}
-                                className={`flex items-center gap-2 px-2 py-1.5 border rounded-lg text-xs transition-colors ${form.bankName === b.id ? "border-blue-600 bg-blue-50" : "border-gray-200 hover:border-blue-300"}`}>
+                                className={`flex items-center gap-2 px-2 py-1.5 border rounded text-xs transition-colors ${form.bankName === b.id ? "border-[#003399] bg-[#003399]/10" : "border-[#DFDFDF] hover:border-[#003399]"}`}>
                                 <BankIcon bankId={b.id} size={20} />
                                 <span className="truncate">{b.text}</span>
                               </button>
@@ -236,7 +233,7 @@ export default function CheckoutPage() {
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                           <div>
-                            <label className="block text-xs font-medium text-slate-600 mb-1">เลขบัญชี</label>
+                            <label className="block text-xs font-semibold text-[#484848] mb-1">เลขบัญชี</label>
                             <input type="text" value={form.accountNumber} maxLength={14}
                             onChange={(e) => {
                               const d = e.target.value.replace(/\D/g, "").slice(0, 10);
@@ -249,7 +246,7 @@ export default function CheckoutPage() {
                             placeholder="XXX-X-XXXXX-X" className={inputClass} />
                           </div>
                           <div>
-                            <label className="block text-xs font-medium text-slate-600 mb-1">ชื่อบัญชี</label>
+                            <label className="block text-xs font-semibold text-[#484848] mb-1">ชื่อบัญชี</label>
                             <input type="text" value={form.accountName} onChange={(e) => setForm({ ...form, accountName: e.target.value })} placeholder="ชื่อ-นามสกุล" className={inputClass} />
                           </div>
                         </div>
@@ -258,30 +255,28 @@ export default function CheckoutPage() {
                     )}
                   </div>
 
-                  {/* Credit Card */}
-                  <div className={`border rounded-xl transition-colors ${form.paymentMethod === "credit_card" ? "border-blue-600" : "border-gray-200"}`}>
-                    <label className={`flex items-center gap-3 p-4 cursor-pointer ${form.paymentMethod === "credit_card" ? "bg-blue-50 rounded-t-xl" : "hover:bg-gray-50 rounded-xl"}`}>
-                      <input type="radio" value="credit_card" checked={form.paymentMethod === "credit_card"} onChange={() => setForm({ ...form, paymentMethod: "credit_card" })} />
+                  <div className={`border rounded transition-colors ${form.paymentMethod === "credit_card" ? "border-[#003399]" : "border-[#DFDFDF]"}`}>
+                    <label className={`flex items-center gap-3 p-4 cursor-pointer ${form.paymentMethod === "credit_card" ? "bg-[#003399]/5 rounded-t" : "hover:bg-[#F5F5F5] rounded"}`}>
+                      <input type="radio" value="credit_card" checked={form.paymentMethod === "credit_card"} onChange={() => setForm({ ...form, paymentMethod: "credit_card" })} className="accent-[#003399]" />
                       <div className="flex gap-2 items-center">
                         <VisaIcon size={24} />
                         <MastercardIcon size={24} />
                       </div>
-                      <span className="text-sm font-medium">บัตรเครดิต / เดบิต</span>
+                      <span className="text-sm font-semibold">บัตรเครดิต / เดบิต</span>
                     </label>
                     {form.paymentMethod === "credit_card" && (
                       <div className="px-4 pb-4 space-y-3">
-                        {/* Card brand */}
                         <div className="flex gap-3">
                           {["visa", "mastercard"].map((brand) => (
                             <button key={brand} type="button" onClick={() => setForm({ ...form, cardBrand: brand })}
-                              className={`flex items-center gap-2 px-3 py-2 border rounded-xl transition-colors ${form.cardBrand === brand ? "border-blue-600 bg-blue-50" : "border-gray-200 hover:border-blue-300"}`}>
+                              className={`flex items-center gap-2 px-3 py-2 border rounded transition-colors ${form.cardBrand === brand ? "border-[#003399] bg-[#003399]/10" : "border-[#DFDFDF] hover:border-[#003399]"}`}>
                               {brand === "visa" ? <VisaIcon size={20} /> : <MastercardIcon size={20} />}
-                              <span className="text-xs font-medium capitalize">{brand}</span>
+                              <span className="text-xs font-semibold capitalize">{brand}</span>
                             </button>
                           ))}
                         </div>
                         <div>
-                          <label className="block text-xs font-medium text-slate-600 mb-1">หมายเลขบัตร</label>
+                          <label className="block text-xs font-semibold text-[#484848] mb-1">หมายเลขบัตร</label>
                           <input type="text" value={form.cardNumber} maxLength={19}
                             onChange={(e) => {
                               const v = e.target.value.replace(/\D/g, "").slice(0, 16);
@@ -291,7 +286,7 @@ export default function CheckoutPage() {
                         </div>
                         <div className="grid grid-cols-2 gap-3">
                           <div>
-                            <label className="block text-xs font-medium text-slate-600 mb-1">วันหมดอายุ</label>
+                            <label className="block text-xs font-semibold text-[#484848] mb-1">วันหมดอายุ</label>
                             <input type="text" value={form.cardExpiry} maxLength={5}
                               onChange={(e) => {
                                 const v = e.target.value.replace(/\D/g, "").slice(0, 4);
@@ -300,7 +295,7 @@ export default function CheckoutPage() {
                               placeholder="MM/YY" className={inputClass} />
                           </div>
                           <div>
-                            <label className="block text-xs font-medium text-slate-600 mb-1">CVV</label>
+                            <label className="block text-xs font-semibold text-[#484848] mb-1">CVV</label>
                             <input type="password" value={form.cardCvv} maxLength={4}
                               onChange={(e) => setForm({ ...form, cardCvv: e.target.value.replace(/\D/g, "").slice(0, 4) })}
                               placeholder="•••" className={inputClass} />
@@ -315,8 +310,8 @@ export default function CheckoutPage() {
             </div>
 
             {/* Notes */}
-            <div className="bg-white border border-gray-100 rounded-2xl p-6">
-              <h2 className="font-bold text-slate-800 mb-4">หมายเหตุ (ถ้ามี)</h2>
+            <div className="bg-white border border-[#DFDFDF] rounded p-6 shadow-[0_1px_3px_rgba(17,17,17,0.06)]">
+              <h2 className="font-bold text-[#111111] mb-4">หมายเหตุ (ถ้ามี)</h2>
               <textarea value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })}
                 className={`${inputClass} resize-none`} rows={3} placeholder="ต้องการแจ้งอะไรเพิ่มเติมไหม?" />
             </div>
@@ -324,31 +319,31 @@ export default function CheckoutPage() {
 
           {/* Summary */}
           <div>
-            <div className="bg-blue-50 rounded-2xl p-6 sticky top-24">
-              <h2 className="font-bold text-slate-800 mb-4">สรุปคำสั่งซื้อ</h2>
+            <div className="bg-[#F5F5F5] border border-[#DFDFDF] rounded p-6 sticky top-24">
+              <h2 className="font-bold text-[#111111] mb-4">สรุปคำสั่งซื้อ</h2>
               <div className="space-y-2 mb-4">
                 {items.map((item) => (
                   <div key={item.id} className="flex justify-between text-sm">
-                    <span className="text-gray-600 truncate flex-1 mr-2">{item.product.name} x{item.quantity}</span>
-                    <span className="font-medium">฿{(item.product.price * item.quantity).toLocaleString()}</span>
+                    <span className="text-[#484848] truncate flex-1 mr-2">{item.product.name} x{item.quantity}</span>
+                    <span className="font-semibold text-[#111111]">฿{(item.product.price * item.quantity).toLocaleString()}</span>
                   </div>
                 ))}
               </div>
-              <hr className="my-3" />
+              <hr className="my-3 border-[#DFDFDF]" />
               <div className="space-y-2 text-sm">
-                <div className="flex justify-between"><span className="text-gray-600">ค่าสินค้า</span><span>฿{total.toLocaleString()}</span></div>
+                <div className="flex justify-between"><span className="text-[#484848]">ค่าสินค้า</span><span>฿{total.toLocaleString()}</span></div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">ค่าจัดส่ง</span>
-                  <span className={shippingCost === 0 ? "text-green-600" : ""}>{shippingCost === 0 ? "ฟรี!" : `฿${shippingCost}`}</span>
+                  <span className="text-[#484848]">ค่าจัดส่ง</span>
+                  <span className={shippingCost === 0 ? "text-[#0A8A00] font-semibold" : ""}>{shippingCost === 0 ? "ฟรี!" : `฿${shippingCost}`}</span>
                 </div>
-                <hr className="my-2" />
+                <hr className="my-2 border-[#DFDFDF]" />
                 <div className="flex justify-between font-bold text-base">
                   <span>รวม</span>
-                  <span className="text-blue-700">฿{(total + shippingCost).toLocaleString()}</span>
+                  <span className="text-[#003399]">฿{(total + shippingCost).toLocaleString()}</span>
                 </div>
               </div>
               <button type="submit" disabled={loading || items.length === 0}
-                className="w-full py-3 bg-blue-700 text-white font-bold rounded-xl hover:bg-blue-800 disabled:opacity-50 transition-colors mt-4">
+                className="w-full py-3.5 bg-[#003399] text-white font-bold rounded hover:bg-[#002B80] disabled:opacity-50 transition-colors mt-4">
                 {loading ? "กำลังสั่งซื้อ..." : "ยืนยันคำสั่งซื้อ"}
               </button>
             </div>
@@ -361,15 +356,15 @@ export default function CheckoutPage() {
 
 function SaveToggle({ form, setForm }: { form: any; setForm: any }) {
   return (
-    <div className="border-t border-gray-100 pt-3">
+    <div className="border-t border-[#DFDFDF] pt-3">
       <label className="flex items-center gap-2 cursor-pointer">
         <input type="checkbox" checked={form.savePayment} onChange={(e) => setForm((f: any) => ({ ...f, savePayment: e.target.checked }))}
-          className="rounded text-blue-600" />
-        <span className="text-xs text-slate-600">บันทึกวิธีชำระนี้ไว้ใช้ครั้งหน้า</span>
+          className="rounded accent-[#003399]" />
+        <span className="text-xs text-[#484848]">บันทึกวิธีชำระนี้ไว้ใช้ครั้งหน้า</span>
       </label>
       {form.savePayment && (
         <input type="text" value={form.paymentLabel} onChange={(e) => setForm((f: any) => ({ ...f, paymentLabel: e.target.value }))}
-          placeholder="ชื่อที่จำได้ง่าย เช่น บัญชีหลัก" className="mt-2 w-full px-3 py-2 border border-gray-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          placeholder="ชื่อที่จำได้ง่าย เช่น บัญชีหลัก" className="mt-2 w-full px-3 py-2 border border-[#DFDFDF] rounded text-xs focus:outline-none focus:ring-2 focus:ring-[#003399] bg-white" />
       )}
     </div>
   );

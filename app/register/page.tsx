@@ -41,7 +41,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex min-h-[calc(100vh-64px)]">
+    <div className="flex min-h-[calc(100vh-60px)]">
       {/* Left — fashion image */}
       <div className="hidden lg:block lg:w-[45%] relative overflow-hidden">
         <Image
@@ -51,7 +51,7 @@ export default function RegisterPage() {
           className="object-cover object-center"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/70 to-blue-900/40" />
+        <div className="absolute inset-0 bg-[#003399]/60" />
         <div className="absolute inset-0 flex flex-col items-start justify-end p-14">
           <Logo variant="light" />
           <p className="text-white/70 text-sm mt-3 max-w-xs leading-relaxed">
@@ -61,78 +61,78 @@ export default function RegisterPage() {
       </div>
 
       {/* Right — form */}
-      <div className="flex-1 flex items-center justify-center px-6 py-12 bg-white dark:bg-[#111827] dark:bg-[#131c30] overflow-y-auto">
+      <div className="flex-1 flex items-center justify-center px-6 py-12 bg-white overflow-y-auto">
         <div className="w-full max-w-sm">
           <div className="lg:hidden mb-8 flex justify-center">
             <Link href="/"><Logo variant="dark" /></Link>
           </div>
 
-          <p className="text-xs text-blue-600 font-semibold tracking-[0.2em] uppercase mb-2">Join Us</p>
-          <h1 className="text-3xl font-bold text-slate-900 dark:text-[#dde8ff] mb-1">สมัครสมาชิก</h1>
-          <p className="text-gray-400 dark:text-[#4e6888] text-sm mb-8">สร้างบัญชีใหม่ของคุณ</p>
+          <p className="text-xs text-[#003399] font-semibold tracking-[0.2em] uppercase mb-2">Join Us</p>
+          <h1 className="text-3xl font-bold text-[#111111] mb-1">สมัครสมาชิก</h1>
+          <p className="text-[#767676] text-sm mb-8">สร้างบัญชีใหม่ของคุณ</p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-[#b8cef0] mb-1.5">ชื่อ-นามสกุล</label>
+              <label className="block text-sm font-semibold text-[#484848] mb-1.5">ชื่อ-นามสกุล</label>
               <input
                 type="text"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 required
                 maxLength={100}
-                className="w-full px-4 py-3 border border-gray-200 dark:border-[#304070] rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-gray-50 dark:bg-[#111827] focus:bg-white dark:bg-[#131c30] transition-colors"
+                className="w-full px-4 py-3 border border-[#DFDFDF] rounded focus:outline-none focus:ring-2 focus:ring-[#003399] text-sm bg-[#F5F5F5] focus:bg-white transition-colors"
                 placeholder="ชื่อของคุณ"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-[#b8cef0] mb-1.5">อีเมล</label>
+              <label className="block text-sm font-semibold text-[#484848] mb-1.5">อีเมล</label>
               <input
                 type="email"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 required
                 maxLength={254}
-                className="w-full px-4 py-3 border border-gray-200 dark:border-[#304070] rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-gray-50 dark:bg-[#111827] focus:bg-white dark:bg-[#131c30] transition-colors"
+                className="w-full px-4 py-3 border border-[#DFDFDF] rounded focus:outline-none focus:ring-2 focus:ring-[#003399] text-sm bg-[#F5F5F5] focus:bg-white transition-colors"
                 placeholder="example@email.com"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-[#b8cef0] mb-1.5">รหัสผ่าน</label>
+              <label className="block text-sm font-semibold text-[#484848] mb-1.5">รหัสผ่าน</label>
               <div className="relative">
                 <input
                   type={showPw ? "text" : "password"}
                   value={form.password}
                   onChange={(e) => setForm({ ...form, password: e.target.value })}
                   required
-                  className="w-full px-4 py-3 pr-11 border border-gray-200 dark:border-[#304070] rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-gray-50 dark:bg-[#111827] focus:bg-white dark:bg-[#131c30] transition-colors"
+                  className="w-full px-4 py-3 pr-11 border border-[#DFDFDF] rounded focus:outline-none focus:ring-2 focus:ring-[#003399] text-sm bg-[#F5F5F5] focus:bg-white transition-colors"
                   placeholder="อย่างน้อย 6 ตัวอักษร"
                 />
-                <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-[#4e6888] hover:text-gray-600 dark:text-[#8aaad4] p-1">
+                <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#767676] hover:text-[#484848] p-1">
                   {showPw ? <EyeSlashIcon className="w-4 h-4" /> : <EyeIcon className="w-4 h-4" />}
                 </button>
               </div>
               {form.password && (
-                <p className={`text-xs mt-1.5 flex items-center gap-1 ${pwStrong ? "text-green-600" : "text-orange-500"}`}>
+                <p className={`text-xs mt-1.5 flex items-center gap-1 ${pwStrong ? "text-[#0A8A00]" : "text-[#E87400]"}`}>
                   <CheckIcon className="w-3 h-3" />
                   {pwStrong ? "รหัสผ่านแข็งแกร่ง" : "ควรมี 8 ตัวอักษรขึ้นไป"}
                 </p>
               )}
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-[#b8cef0] mb-1.5">ยืนยันรหัสผ่าน</label>
+              <label className="block text-sm font-semibold text-[#484848] mb-1.5">ยืนยันรหัสผ่าน</label>
               <div className="relative">
                 <input
                   type="password"
                   value={form.confirm}
                   onChange={(e) => setForm({ ...form, confirm: e.target.value })}
                   required
-                  className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 text-sm bg-gray-50 dark:bg-[#111827] focus:bg-white dark:bg-[#131c30] transition-colors ${
-                    form.confirm ? (pwMatch ? "border-green-400 focus:ring-green-400" : "border-red-300 focus:ring-red-400") : "border-gray-200 dark:border-[#304070] focus:ring-blue-500"
+                  className={`w-full px-4 py-3 border rounded focus:outline-none focus:ring-2 text-sm bg-[#F5F5F5] focus:bg-white transition-colors ${
+                    form.confirm ? (pwMatch ? "border-[#0A8A00] focus:ring-[#0A8A00]" : "border-[#CC0008] focus:ring-[#CC0008]") : "border-[#DFDFDF] focus:ring-[#003399]"
                   }`}
                   placeholder="••••••••"
                 />
                 {pwMatch && (
-                  <CheckIcon className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-green-500" />
+                  <CheckIcon className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#0A8A00]" />
                 )}
               </div>
             </div>
@@ -140,7 +140,7 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3.5 bg-blue-700 text-white font-bold rounded-xl hover:bg-blue-800 disabled:opacity-50 transition-all active:scale-[0.98] mt-2"
+              className="w-full py-3.5 bg-[#003399] text-white font-bold rounded hover:bg-[#002B80] disabled:opacity-50 transition-all active:scale-[0.98] mt-2"
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
@@ -151,9 +151,9 @@ export default function RegisterPage() {
             </button>
           </form>
 
-          <p className="text-center text-sm text-gray-400 dark:text-[#4e6888] mt-8">
+          <p className="text-center text-sm text-[#767676] mt-8">
             มีบัญชีแล้ว?{" "}
-            <Link href="/login" className="text-blue-600 hover:text-blue-800 font-semibold">
+            <Link href="/login" className="text-[#003399] hover:text-[#002B80] font-semibold">
               เข้าสู่ระบบ
             </Link>
           </p>

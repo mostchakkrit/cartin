@@ -21,16 +21,16 @@ export default function CartPage() {
 
   if (status === "loading" || isLoading) {
     return (
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="mb-8">
-          <div className="h-4 w-24 bg-gray-100 dark:bg-[#1a2540] rounded animate-pulse mb-2" />
-          <div className="h-8 w-48 bg-gray-100 dark:bg-[#1a2540] rounded animate-pulse" />
+          <div className="h-4 w-24 bg-[#DFDFDF] rounded animate-pulse mb-2" />
+          <div className="h-8 w-48 bg-[#DFDFDF] rounded animate-pulse" />
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-4">
-            {[1, 2, 3].map((i) => <div key={i} className="h-28 bg-gray-100 dark:bg-[#1a2540] rounded-2xl animate-pulse" />)}
+            {[1, 2, 3].map((i) => <div key={i} className="h-28 bg-[#DFDFDF] rounded animate-pulse" />)}
           </div>
-          <div className="h-64 bg-gray-100 dark:bg-[#1a2540] rounded-2xl animate-pulse" />
+          <div className="h-64 bg-[#DFDFDF] rounded animate-pulse" />
         </div>
       </div>
     );
@@ -40,22 +40,22 @@ export default function CartPage() {
   const freeShippingProgress = Math.min((total / 1000) * 100, 100);
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <div className="mb-8">
-        <p className="text-xs text-blue-600 font-semibold tracking-[0.2em] uppercase mb-1">My Cart</p>
-        <h1 className="text-3xl font-bold text-slate-900 dark:text-[#dde8ff]">ตะกร้าสินค้า</h1>
+        <p className="text-xs text-[#003399] font-semibold tracking-[0.2em] uppercase mb-1">My Cart</p>
+        <h1 className="text-3xl font-bold text-[#111111]">ตะกร้าสินค้า</h1>
       </div>
 
       {items.length === 0 ? (
         <div className="text-center py-24">
-          <div className="w-24 h-24 rounded-full bg-gray-100 dark:bg-[#1a2540] flex items-center justify-center mx-auto mb-5">
-            <ShoppingBagIcon className="w-10 h-10 text-gray-300" />
+          <div className="w-24 h-24 rounded bg-[#F5F5F5] border border-[#DFDFDF] flex items-center justify-center mx-auto mb-5">
+            <ShoppingBagIcon className="w-10 h-10 text-[#DFDFDF]" />
           </div>
-          <p className="text-xl font-semibold text-slate-700 dark:text-[#b8cef0] mb-1">ตะกร้าว่างเปล่า</p>
-          <p className="text-gray-400 dark:text-[#4e6888] text-sm mb-8">เพิ่มสินค้าที่คุณชื่นชอบลงในตะกร้า</p>
+          <p className="text-xl font-semibold text-[#111111] mb-1">ตะกร้าว่างเปล่า</p>
+          <p className="text-[#767676] text-sm mb-8">เพิ่มสินค้าที่คุณชื่นชอบลงในตะกร้า</p>
           <Link
             href="/products"
-            className="inline-flex items-center gap-2 px-8 py-3.5 bg-blue-700 text-white font-bold rounded-xl hover:bg-blue-800 transition-all shadow-lg shadow-blue-200 dark:shadow-blue-900/40"
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#003399] text-white font-bold rounded hover:bg-[#002B80] transition-all"
           >
             เริ่มช็อปเลย
           </Link>
@@ -65,9 +65,8 @@ export default function CartPage() {
           {/* Item list */}
           <div className="lg:col-span-2 space-y-3">
             {items.map((item) => (
-              <div key={item.id} className="bg-white dark:bg-[#131c30] border border-gray-100 dark:border-[#253350] rounded-2xl p-4 flex gap-4 hover:shadow-sm transition-shadow">
-                {/* Product image — portrait ratio */}
-                <Link href={`/products/${item.product.slug}`} className="relative flex-shrink-0 rounded-xl overflow-hidden bg-gray-50 dark:bg-[#111827]" style={{ width: 80, height: 100 }}>
+              <div key={item.id} className="bg-white border border-[#DFDFDF] rounded p-4 flex gap-4 hover:shadow-[0_4px_12px_rgba(17,17,17,0.08)] transition-shadow">
+                <Link href={`/products/${item.product.slug}`} className="relative flex-shrink-0 rounded overflow-hidden bg-[#F5F5F5]" style={{ width: 80, height: 80 }}>
                   {item.product.images[0] ? (
                     <Image src={item.product.images[0]} alt={item.product.name} fill className="object-cover" />
                   ) : (
@@ -76,37 +75,37 @@ export default function CartPage() {
                 </Link>
 
                 <div className="flex-1 min-w-0">
-                  <Link href={`/products/${item.product.slug}`} className="font-semibold text-slate-800 dark:text-[#dde8ff] hover:text-blue-700 line-clamp-2 text-sm leading-snug">
+                  <Link href={`/products/${item.product.slug}`} className="font-semibold text-[#111111] hover:text-[#003399] line-clamp-2 text-sm leading-snug">
                     {item.product.name}
                   </Link>
                   {(item.size || item.color) && (
                     <div className="flex gap-2 mt-1">
-                      {item.size && <span className="text-xs bg-gray-100 dark:bg-[#1a2540] text-gray-500 dark:text-[#6080a8] px-2 py-0.5 rounded-full">ไซส์ {item.size}</span>}
-                      {item.color && <span className="text-xs bg-gray-100 dark:bg-[#1a2540] text-gray-500 dark:text-[#6080a8] px-2 py-0.5 rounded-full">{item.color}</span>}
+                      {item.size && <span className="text-xs bg-[#F5F5F5] text-[#767676] px-2 py-0.5 rounded border border-[#DFDFDF]">ไซส์ {item.size}</span>}
+                      {item.color && <span className="text-xs bg-[#F5F5F5] text-[#767676] px-2 py-0.5 rounded border border-[#DFDFDF]">{item.color}</span>}
                     </div>
                   )}
-                  <p className="text-blue-700 font-bold mt-2 text-sm">฿{item.product.price.toLocaleString()}</p>
+                  <p className="text-[#003399] font-bold mt-2 text-sm">฿{item.product.price.toLocaleString()}</p>
                 </div>
 
                 <div className="flex flex-col items-end justify-between">
                   <button
                     onClick={() => { removeItem(item.id); toast.success("ลบสินค้าแล้ว"); }}
-                    className="p-1.5 text-gray-300 hover:text-red-500 transition-colors"
+                    className="p-1.5 text-[#DFDFDF] hover:text-[#CC0008] transition-colors"
                   >
                     <TrashIcon className="w-4 h-4" />
                   </button>
 
                   <div>
-                    <div className="flex items-center border border-gray-200 dark:border-[#304070] rounded-lg overflow-hidden mb-1.5">
-                      <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="p-2 hover:bg-gray-50 dark:bg-[#111827] hover:text-blue-700 transition-colors">
+                    <div className="flex items-center border border-[#DFDFDF] rounded overflow-hidden mb-1.5">
+                      <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="p-2 hover:bg-[#F5F5F5] hover:text-[#003399] transition-colors">
                         <MinusIcon className="w-3 h-3" />
                       </button>
-                      <span className="px-3 text-sm font-semibold text-slate-800 dark:text-[#dde8ff]">{item.quantity}</span>
-                      <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="p-2 hover:bg-gray-50 dark:bg-[#111827] hover:text-blue-700 transition-colors">
+                      <span className="px-3 text-sm font-semibold text-[#111111]">{item.quantity}</span>
+                      <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="p-2 hover:bg-[#F5F5F5] hover:text-[#003399] transition-colors">
                         <PlusIcon className="w-3 h-3" />
                       </button>
                     </div>
-                    <p className="text-xs font-bold text-slate-700 dark:text-[#b8cef0] text-right">฿{(item.product.price * item.quantity).toLocaleString()}</p>
+                    <p className="text-xs font-bold text-[#111111] text-right">฿{(item.product.price * item.quantity).toLocaleString()}</p>
                   </div>
                 </div>
               </div>
@@ -115,45 +114,45 @@ export default function CartPage() {
 
           {/* Summary */}
           <div>
-            <div className="bg-white dark:bg-[#131c30] border border-gray-100 dark:border-[#253350] rounded-2xl p-6 sticky top-24 shadow-sm">
-              <h2 className="font-bold text-slate-900 dark:text-[#dde8ff] mb-5 text-base">สรุปคำสั่งซื้อ</h2>
+            <div className="bg-white border border-[#DFDFDF] rounded p-6 sticky top-24 shadow-[0_1px_3px_rgba(17,17,17,0.06)]">
+              <h2 className="font-bold text-[#111111] mb-5 text-base">สรุปคำสั่งซื้อ</h2>
 
               {/* Free shipping progress */}
-              <div className="mb-5 bg-blue-50 dark:bg-[#0f1d38] rounded-xl p-3">
-                <div className="flex justify-between text-xs text-blue-600 font-medium mb-1.5">
+              <div className="mb-5 bg-[#F5F5F5] border border-[#DFDFDF] rounded p-3">
+                <div className="flex justify-between text-xs text-[#003399] font-semibold mb-1.5">
                   <span>{total >= 1000 ? "✓ ได้รับส่งฟรี!" : `อีก ฿${(1000 - total).toLocaleString()} รับส่งฟรี`}</span>
                   <span>฿1,000</span>
                 </div>
-                <div className="w-full bg-blue-100 rounded-full h-1.5">
+                <div className="w-full bg-[#DFDFDF] rounded-full h-1.5">
                   <div
-                    className="bg-blue-600 h-1.5 rounded-full transition-all duration-500"
+                    className="bg-[#003399] h-1.5 rounded-full transition-all duration-500"
                     style={{ width: `${freeShippingProgress}%` }}
                   />
                 </div>
               </div>
 
               <div className="space-y-2.5 text-sm mb-5">
-                <div className="flex justify-between text-gray-600 dark:text-[#8aaad4]">
+                <div className="flex justify-between text-[#484848]">
                   <span>สินค้า ({itemCount} ชิ้น)</span>
                   <span>฿{total.toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between text-gray-600 dark:text-[#8aaad4]">
+                <div className="flex justify-between text-[#484848]">
                   <span>ค่าจัดส่ง</span>
-                  <span className={shipping === 0 ? "text-green-600 font-semibold" : ""}>{shipping === 0 ? "ฟรี!" : `฿${shipping}`}</span>
+                  <span className={shipping === 0 ? "text-[#0A8A00] font-semibold" : ""}>{shipping === 0 ? "ฟรี!" : `฿${shipping}`}</span>
                 </div>
-                <div className="border-t border-gray-100 dark:border-[#253350] pt-2.5 flex justify-between font-bold text-base">
+                <div className="border-t border-[#DFDFDF] pt-2.5 flex justify-between font-bold text-base">
                   <span>รวมทั้งหมด</span>
-                  <span className="text-blue-700">฿{(total + shipping).toLocaleString()}</span>
+                  <span className="text-[#003399]">฿{(total + shipping).toLocaleString()}</span>
                 </div>
               </div>
 
               <button
                 onClick={() => router.push("/checkout")}
-                className="w-full py-3.5 bg-blue-700 text-white font-bold rounded-xl hover:bg-blue-800 transition-all active:scale-[0.99] shadow-md shadow-blue-200 dark:shadow-blue-900/40"
+                className="w-full py-3.5 bg-[#003399] text-white font-bold rounded hover:bg-[#002B80] transition-all active:scale-[0.99]"
               >
                 ดำเนินการสั่งซื้อ
               </button>
-              <Link href="/products" className="block text-center text-sm text-gray-400 dark:text-[#4e6888] hover:text-blue-600 mt-4 transition-colors">
+              <Link href="/products" className="block text-center text-sm text-[#767676] hover:text-[#003399] mt-4 transition-colors">
                 ← ช็อปต่อ
               </Link>
             </div>

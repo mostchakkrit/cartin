@@ -15,9 +15,9 @@ const STATUS_OPTIONS = [
   { value: "CANCELLED", label: "ยกเลิก" },
 ];
 const STATUS_COLORS: Record<string, string> = {
-  PENDING: "bg-yellow-100 text-yellow-700", CONFIRMED: "bg-blue-100 text-blue-700",
-  PROCESSING: "bg-purple-100 text-purple-700", SHIPPED: "bg-indigo-100 text-indigo-700",
-  DELIVERED: "bg-green-100 text-green-700", CANCELLED: "bg-red-100 text-red-700",
+  PENDING: "bg-[#E87400]/10 text-[#E87400]", CONFIRMED: "bg-[#003399]/10 text-[#003399]",
+  PROCESSING: "bg-purple-50 text-purple-700", SHIPPED: "bg-indigo-50 text-indigo-700",
+  DELIVERED: "bg-[#0A8A00]/10 text-[#0A8A00]", CANCELLED: "bg-[#CC0008]/10 text-[#CC0008]",
 };
 
 export default function AdminOrdersPage() {
@@ -46,15 +46,18 @@ export default function AdminOrdersPage() {
     } else toast.error("เกิดข้อผิดพลาด");
   };
 
-  if (loading) return <div className="flex justify-center py-20"><div className="animate-spin w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full" /></div>;
+  if (loading) return <div className="flex justify-center py-20"><div className="animate-spin w-8 h-8 border-4 border-[#003399] border-t-transparent rounded-full" /></div>;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <h1 className="text-3xl font-bold text-slate-800 mb-8">จัดการคำสั่งซื้อ</h1>
+    <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div className="mb-8">
+        <p className="text-xs text-[#003399] font-semibold tracking-[0.2em] uppercase mb-1">Admin</p>
+        <h1 className="text-3xl font-bold text-[#111111]">จัดการคำสั่งซื้อ</h1>
+      </div>
 
-      <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden">
+      <div className="bg-white border border-[#DFDFDF] rounded overflow-hidden shadow-[0_1px_3px_rgba(17,17,17,0.06)]">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-slate-600 font-medium">
+          <thead className="bg-[#F5F5F5] text-[#484848] font-semibold">
             <tr>
               <th className="text-left px-4 py-3">คำสั่งซื้อ</th>
               <th className="text-left px-4 py-3">ลูกค้า</th>
@@ -64,22 +67,22 @@ export default function AdminOrdersPage() {
               <th className="text-left px-4 py-3">อัปเดต</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-50">
+          <tbody className="divide-y divide-[#DFDFDF]">
             {orders.map((order) => (
-              <tr key={order.id} className="hover:bg-gray-50">
+              <tr key={order.id} className="hover:bg-[#F5F5F5]">
                 <td className="px-4 py-3">
-                  <Link href={`/orders/${order.id}`} className="font-medium text-blue-600 hover:text-blue-800">
+                  <Link href={`/orders/${order.id}`} className="font-semibold text-[#003399] hover:text-[#002B80]">
                     #{order.id.slice(-8).toUpperCase()}
                   </Link>
                 </td>
                 <td className="px-4 py-3">
-                  <p className="font-medium">{order.user?.name}</p>
-                  <p className="text-gray-400 text-xs">{order.user?.email}</p>
+                  <p className="font-semibold text-[#111111]">{order.user?.name}</p>
+                  <p className="text-[#767676] text-xs">{order.user?.email}</p>
                 </td>
-                <td className="px-4 py-3 text-gray-500">{new Date(order.createdAt).toLocaleDateString("th-TH")}</td>
-                <td className="px-4 py-3 font-bold text-blue-700">฿{order.total.toLocaleString()}</td>
+                <td className="px-4 py-3 text-[#767676]">{new Date(order.createdAt).toLocaleDateString("th-TH")}</td>
+                <td className="px-4 py-3 font-bold text-[#003399]">฿{order.total.toLocaleString()}</td>
                 <td className="px-4 py-3">
-                  <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${STATUS_COLORS[order.status] || "bg-gray-100"}`}>
+                  <span className={`px-2 py-0.5 rounded text-xs font-semibold ${STATUS_COLORS[order.status] || "bg-[#F5F5F5] text-[#484848]"}`}>
                     {STATUS_OPTIONS.find((s) => s.value === order.status)?.label || order.status}
                   </span>
                 </td>
@@ -87,7 +90,7 @@ export default function AdminOrdersPage() {
                   <select
                     value={order.status}
                     onChange={(e) => updateStatus(order.id, e.target.value)}
-                    className="px-2 py-1 border border-gray-200 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    className="px-2 py-1 border border-[#DFDFDF] rounded text-xs focus:outline-none focus:ring-1 focus:ring-[#003399] bg-white"
                   >
                     {STATUS_OPTIONS.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
                   </select>
@@ -96,7 +99,7 @@ export default function AdminOrdersPage() {
             ))}
           </tbody>
         </table>
-        {orders.length === 0 && <div className="text-center py-12 text-gray-400">ยังไม่มีคำสั่งซื้อ</div>}
+        {orders.length === 0 && <div className="text-center py-12 text-[#767676]">ยังไม่มีคำสั่งซื้อ</div>}
       </div>
     </div>
   );

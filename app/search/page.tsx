@@ -27,26 +27,26 @@ function SearchContent() {
   return (
     <div className="max-w-2xl mx-auto px-4 py-20">
       <div className="text-center mb-10">
-        <p className="text-xs text-blue-600 font-semibold tracking-[0.2em] uppercase mb-2">Search</p>
-        <h1 className="text-3xl font-bold text-slate-900 dark:text-[#dde8ff] mb-2">ค้นหาสินค้า</h1>
-        <p className="text-gray-400 dark:text-[#4e6888] text-sm">พิมพ์ชื่อสินค้าหรือหมวดหมู่ที่ต้องการ</p>
+        <p className="text-xs text-[#003399] font-semibold tracking-[0.2em] uppercase mb-2">Search</p>
+        <h1 className="text-3xl font-bold text-[#111111] mb-2">ค้นหาสินค้า</h1>
+        <p className="text-[#767676] text-sm">พิมพ์ชื่อสินค้าหรือหมวดหมู่ที่ต้องการ</p>
       </div>
 
       <form onSubmit={handleSearch} className="flex gap-2 mb-8">
         <div className="relative flex-1">
-          <MagnifyingGlassIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 dark:text-[#4e6888]" />
+          <MagnifyingGlassIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#767676]" />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="เสื้อผ้า รองเท้า กระเป๋า..."
-            className="w-full pl-12 pr-4 py-4 border border-gray-200 dark:border-[#304070] rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-base bg-white dark:bg-[#131c30] shadow-sm"
+            className="w-full pl-12 pr-4 py-4 border border-[#DFDFDF] rounded focus:outline-none focus:ring-2 focus:ring-[#003399] text-base bg-[#F5F5F5] focus:bg-white transition-colors"
             autoFocus
           />
         </div>
         <button
           type="submit"
-          className="px-6 py-4 bg-blue-700 text-white font-bold rounded-2xl hover:bg-blue-800 transition-all active:scale-[0.98] shadow-md shadow-blue-200 dark:shadow-blue-900/40"
+          className="px-6 py-4 bg-[#003399] text-white font-bold rounded hover:bg-[#002B80] transition-colors"
         >
           ค้นหา
         </button>
@@ -54,13 +54,13 @@ function SearchContent() {
 
       {/* Trending searches */}
       <div className="mb-8">
-        <p className="text-xs font-semibold text-gray-400 dark:text-[#4e6888] uppercase tracking-wider mb-3">กำลังเป็นที่นิยม</p>
+        <p className="text-xs font-semibold text-[#767676] uppercase tracking-wider mb-3">กำลังเป็นที่นิยม</p>
         <div className="flex flex-wrap gap-2">
           {TRENDING.map((term) => (
             <button
               key={term}
               onClick={() => router.push(`/products?search=${encodeURIComponent(term)}`)}
-              className="px-4 py-2 bg-gray-100 dark:bg-[#1a2540] hover:bg-blue-50 dark:bg-[#0f1d38] hover:text-blue-700 text-slate-600 dark:text-[#8aaad4] text-sm rounded-full transition-colors font-medium"
+              className="px-4 py-2 bg-[#F5F5F5] hover:bg-[#003399]/5 hover:text-[#003399] text-[#484848] text-sm rounded transition-colors font-medium border border-[#DFDFDF] hover:border-[#003399]"
             >
               {term}
             </button>
@@ -70,13 +70,13 @@ function SearchContent() {
 
       {/* Browse by category */}
       <div>
-        <p className="text-xs font-semibold text-gray-400 dark:text-[#4e6888] uppercase tracking-wider mb-3">เลือกตามหมวดหมู่</p>
+        <p className="text-xs font-semibold text-[#767676] uppercase tracking-wider mb-3">เลือกตามหมวดหมู่</p>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
           {SUGGESTIONS.map(({ label, href }) => (
             <Link
               key={href}
               href={href}
-              className="bg-white dark:bg-[#131c30] border border-gray-100 dark:border-[#253350] rounded-xl px-4 py-3 text-sm font-medium text-slate-700 dark:text-[#b8cef0] hover:border-blue-300 hover:bg-blue-50 dark:bg-[#0f1d38] hover:text-blue-700 transition-all text-center shadow-sm"
+              className="bg-white border border-[#DFDFDF] rounded px-4 py-3 text-sm font-medium text-[#484848] hover:border-[#003399] hover:bg-[#003399]/5 hover:text-[#003399] transition-all text-center"
             >
               {label}
             </Link>

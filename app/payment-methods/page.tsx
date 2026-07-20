@@ -107,24 +107,24 @@ export default function PaymentMethodsPage() {
     toast.success("ตั้งเป็นค่าเริ่มต้นแล้ว");
   };
 
-  const inputClass = "w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm";
+  const inputClass = "w-full px-4 py-2.5 border border-[#DFDFDF] rounded focus:outline-none focus:ring-2 focus:ring-[#003399] text-sm bg-[#F5F5F5] focus:bg-white transition-colors";
 
-  if (loading) return <div className="flex justify-center py-20"><div className="animate-spin w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full" /></div>;
+  if (loading) return <div className="flex justify-center py-20"><div className="animate-spin w-8 h-8 border-4 border-[#003399] border-t-transparent rounded-full" /></div>;
 
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800">วิธีชำระเงิน</h1>
-          <p className="text-gray-500 text-sm mt-1">จัดการบัญชีธนาคารและบัตรที่บันทึกไว้</p>
+          <h1 className="text-2xl font-bold text-[#111111]">วิธีชำระเงิน</h1>
+          <p className="text-[#767676] text-sm mt-1">จัดการบัญชีธนาคารและบัตรที่บันทึกไว้</p>
         </div>
-        <button onClick={openAdd} className="flex items-center gap-2 px-4 py-2 bg-blue-700 text-white rounded-xl hover:bg-blue-800 transition-colors text-sm font-medium">
+        <button onClick={openAdd} className="flex items-center gap-2 px-4 py-2 bg-[#003399] text-white rounded hover:bg-[#002B80] transition-colors text-sm font-semibold">
           <PlusIcon className="w-4 h-4" /> เพิ่มใหม่
         </button>
       </div>
 
       {methods.length === 0 ? (
-        <div className="text-center py-16 bg-gray-50 rounded-2xl text-gray-400">
+        <div className="text-center py-16 bg-[#F5F5F5] rounded border border-[#DFDFDF] text-[#767676]">
           <div className="text-5xl mb-3">💳</div>
           <p className="font-medium">ยังไม่มีวิธีชำระเงินที่บันทึกไว้</p>
           <p className="text-sm mt-1">กดปุ่ม "เพิ่มใหม่" เพื่อเพิ่ม</p>
@@ -132,22 +132,22 @@ export default function PaymentMethodsPage() {
       ) : (
         <div className="space-y-3">
           {methods.map((m) => (
-            <div key={m.id} className={`bg-white border rounded-2xl p-5 flex items-center gap-4 shadow-sm ${m.isDefault ? "border-blue-300" : "border-gray-100"}`}>
+            <div key={m.id} className={`bg-white border rounded p-5 flex items-center gap-4 shadow-[0_1px_3px_rgba(17,17,17,0.06)] ${m.isDefault ? "border-[#003399]" : "border-[#DFDFDF]"}`}>
               <div className="flex-shrink-0">
                 {m.type === "bank_transfer" && m.bankName ? <BankIcon bankId={m.bankName} size={40} /> : m.cardBrand === "visa" ? <VisaIcon size={36} /> : <MastercardIcon size={36} />}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-0.5">
-                  <p className="font-semibold text-slate-800 text-sm">{m.label || (m.type === "bank_transfer" ? "โอนธนาคาร" : "บัตรเครดิต / เดบิต")}</p>
-                  {m.isDefault && <span className="text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full">ค่าเริ่มต้น</span>}
+                  <p className="font-semibold text-[#111111] text-sm">{m.label || (m.type === "bank_transfer" ? "โอนธนาคาร" : "บัตรเครดิต / เดบิต")}</p>
+                  {m.isDefault && <span className="text-xs bg-[#003399]/10 text-[#003399] px-2 py-0.5 rounded">ค่าเริ่มต้น</span>}
                 </div>
                 {m.type === "bank_transfer" ? (
-                  <div className="text-xs text-gray-400">
+                  <div className="text-xs text-[#767676]">
                     <p>{BANKS.find((b) => b.id === m.bankName)?.name}</p>
                     <p>เลขบัญชี ···{m.accountNumber?.slice(-4)} · {m.accountName}</p>
                   </div>
                 ) : (
-                  <div className="text-xs text-gray-400">
+                  <div className="text-xs text-[#767676]">
                     <p className="capitalize">{m.cardBrand}</p>
                     <p>···· ···· ···· {m.cardLast4} · หมดอายุ {m.cardExpiry}</p>
                   </div>
@@ -155,15 +155,15 @@ export default function PaymentMethodsPage() {
               </div>
               <div className="flex items-center gap-1 flex-shrink-0">
                 {!m.isDefault && (
-                  <button onClick={() => handleSetDefault(m)} title="ตั้งเป็นค่าเริ่มต้น" className="p-2 text-gray-300 hover:text-yellow-400 hover:bg-yellow-50 rounded-xl transition-colors">
+                  <button onClick={() => handleSetDefault(m)} title="ตั้งเป็นค่าเริ่มต้น" className="p-2 text-[#DFDFDF] hover:text-[#FFDA1A] hover:bg-[#FFDA1A]/10 rounded transition-colors">
                     <StarIcon className="w-5 h-5" />
                   </button>
                 )}
-                {m.isDefault && <StarSolid className="w-5 h-5 text-yellow-400 mx-2" />}
-                <button onClick={() => openEdit(m)} className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-colors">
+                {m.isDefault && <StarSolid className="w-5 h-5 text-[#FFDA1A] mx-2" />}
+                <button onClick={() => openEdit(m)} className="p-2 text-[#767676] hover:text-[#003399] hover:bg-[#003399]/10 rounded transition-colors">
                   <PencilIcon className="w-5 h-5" />
                 </button>
-                <button onClick={() => handleDelete(m.id)} className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-colors">
+                <button onClick={() => handleDelete(m.id)} className="p-2 text-[#767676] hover:text-[#CC0008] hover:bg-[#CC0008]/10 rounded transition-colors">
                   <TrashIcon className="w-5 h-5" />
                 </button>
               </div>
@@ -175,10 +175,10 @@ export default function PaymentMethodsPage() {
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4" onClick={() => setShowModal(false)}>
-          <div className="bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-white rounded w-full max-w-md p-6 shadow-[0_8px_24px_rgba(17,17,17,0.12)]" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-5">
-              <h2 className="text-lg font-bold text-slate-800">{editId ? "แก้ไขวิธีชำระเงิน" : "เพิ่มวิธีชำระเงิน"}</h2>
-              <button onClick={() => setShowModal(false)} className="text-gray-400 hover:text-gray-600"><XMarkIcon className="w-5 h-5" /></button>
+              <h2 className="text-lg font-bold text-[#111111]">{editId ? "แก้ไขวิธีชำระเงิน" : "เพิ่มวิธีชำระเงิน"}</h2>
+              <button onClick={() => setShowModal(false)} className="text-[#767676] hover:text-[#111111]"><XMarkIcon className="w-5 h-5" /></button>
             </div>
 
             {/* Type selector — ซ่อนถ้า edit */}
@@ -189,7 +189,7 @@ export default function PaymentMethodsPage() {
                   { value: "credit_card", label: "บัตรเครดิต/เดบิต" },
                 ].map((t) => (
                   <button key={t.value} type="button" onClick={() => setForm({ ...form, type: t.value })}
-                    className={`flex-1 py-2 border rounded-xl text-sm font-medium transition-colors ${form.type === t.value ? "border-blue-600 bg-blue-50 text-blue-700" : "border-gray-200 text-gray-500 hover:border-blue-300"}`}>
+                    className={`flex-1 py-2 border rounded text-sm font-medium transition-colors ${form.type === t.value ? "border-[#003399] bg-[#003399]/5 text-[#003399]" : "border-[#DFDFDF] text-[#767676] hover:border-[#003399]"}`}>
                     {t.label}
                   </button>
                 ))}
@@ -198,18 +198,18 @@ export default function PaymentMethodsPage() {
 
             <div className="space-y-3">
               <div>
-                <label className="block text-xs font-medium text-slate-600 mb-1">ชื่อที่จำได้ง่าย (ไม่บังคับ)</label>
+                <label className="block text-xs font-semibold text-[#484848] mb-1">ชื่อที่จำได้ง่าย (ไม่บังคับ)</label>
                 <input type="text" value={form.label} onChange={(e) => setForm({ ...form, label: e.target.value })} placeholder="เช่น บัญชีหลัก, บัตรส่วนตัว" className={inputClass} />
               </div>
 
               {form.type === "bank_transfer" ? (
                 <>
                   <div>
-                    <label className="block text-xs font-medium text-slate-600 mb-2">ธนาคาร</label>
+                    <label className="block text-xs font-semibold text-[#484848] mb-2">ธนาคาร</label>
                     <div className="grid grid-cols-2 gap-2">
                       {BANKS.map((b) => (
                         <button key={b.id} type="button" onClick={() => setForm({ ...form, bankName: b.id })}
-                          className={`flex items-center gap-2 px-3 py-2 border rounded-lg text-xs transition-colors ${form.bankName === b.id ? "border-blue-600 bg-blue-50" : "border-gray-200 hover:border-blue-300"}`}>
+                          className={`flex items-center gap-2 px-3 py-2 border rounded text-xs transition-colors ${form.bankName === b.id ? "border-[#003399] bg-[#003399]/5" : "border-[#DFDFDF] hover:border-[#003399]"}`}>
                           <BankIcon bankId={b.id} size={22} />
                           <span className="truncate">{b.name}</span>
                         </button>
@@ -217,7 +217,7 @@ export default function PaymentMethodsPage() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-slate-600 mb-1">เลขบัญชี</label>
+                    <label className="block text-xs font-semibold text-[#484848] mb-1">เลขบัญชี</label>
                     <input type="text" value={form.accountNumber} maxLength={14}
                       onChange={(e) => {
                         const d = e.target.value.replace(/\D/g, "").slice(0, 10);
@@ -230,18 +230,18 @@ export default function PaymentMethodsPage() {
                       placeholder="XXX-X-XXXXX-X" className={inputClass} />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-slate-600 mb-1">ชื่อบัญชี</label>
+                    <label className="block text-xs font-semibold text-[#484848] mb-1">ชื่อบัญชี</label>
                     <input type="text" value={form.accountName} onChange={(e) => setForm({ ...form, accountName: e.target.value })} placeholder="ชื่อ-นามสกุล" className={inputClass} />
                   </div>
                 </>
               ) : (
                 <>
                   <div>
-                    <label className="block text-xs font-medium text-slate-600 mb-2">ประเภทบัตร</label>
+                    <label className="block text-xs font-semibold text-[#484848] mb-2">ประเภทบัตร</label>
                     <div className="flex gap-3">
                       {["visa", "mastercard"].map((brand) => (
                         <button key={brand} type="button" onClick={() => setForm({ ...form, cardBrand: brand })}
-                          className={`flex items-center gap-2 px-3 py-2 border rounded-xl transition-colors ${form.cardBrand === brand ? "border-blue-600 bg-blue-50" : "border-gray-200 hover:border-blue-300"}`}>
+                          className={`flex items-center gap-2 px-3 py-2 border rounded transition-colors ${form.cardBrand === brand ? "border-[#003399] bg-[#003399]/5" : "border-[#DFDFDF] hover:border-[#003399]"}`}>
                           {brand === "visa" ? <VisaIcon size={22} /> : <MastercardIcon size={22} />}
                           <span className="text-xs font-medium capitalize">{brand}</span>
                         </button>
@@ -249,7 +249,7 @@ export default function PaymentMethodsPage() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-slate-600 mb-1">หมายเลขบัตร</label>
+                    <label className="block text-xs font-semibold text-[#484848] mb-1">หมายเลขบัตร</label>
                     <input type="text" value={form.cardNumber} maxLength={19}
                       onChange={(e) => {
                         const v = e.target.value.replace(/\D/g, "").slice(0, 16);
@@ -259,7 +259,7 @@ export default function PaymentMethodsPage() {
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-xs font-medium text-slate-600 mb-1">วันหมดอายุ</label>
+                      <label className="block text-xs font-semibold text-[#484848] mb-1">วันหมดอายุ</label>
                       <input type="text" value={form.cardExpiry} maxLength={5}
                         onChange={(e) => {
                           const v = e.target.value.replace(/\D/g, "").slice(0, 4);
@@ -268,8 +268,8 @@ export default function PaymentMethodsPage() {
                         placeholder="MM/YY" className={inputClass} />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-slate-600 mb-1">
-                        CVV <span className="text-gray-400 font-normal">(ไม่ถูกบันทึก)</span>
+                      <label className="block text-xs font-semibold text-[#484848] mb-1">
+                        CVV <span className="text-[#767676] font-normal">(ไม่ถูกบันทึก)</span>
                       </label>
                       <input type="password" value={form.cardCvv} maxLength={4}
                         onChange={(e) => setForm({ ...form, cardCvv: e.target.value.replace(/\D/g, "").slice(0, 4) })}
@@ -280,16 +280,16 @@ export default function PaymentMethodsPage() {
               )}
 
               <label className="flex items-center gap-2 pt-1">
-                <input type="checkbox" checked={form.isDefault} onChange={(e) => setForm({ ...form, isDefault: e.target.checked })} className="rounded text-blue-600" />
-                <span className="text-sm text-slate-600">ตั้งเป็นวิธีชำระเงินค่าเริ่มต้น</span>
+                <input type="checkbox" checked={form.isDefault} onChange={(e) => setForm({ ...form, isDefault: e.target.checked })} className="rounded accent-[#003399]" />
+                <span className="text-sm text-[#484848]">ตั้งเป็นวิธีชำระเงินค่าเริ่มต้น</span>
               </label>
             </div>
 
             <div className="flex gap-3 mt-6">
-              <button type="button" onClick={() => setShowModal(false)} className="flex-1 py-2.5 border border-gray-200 rounded-xl text-sm font-medium text-slate-600 hover:bg-gray-50 transition-colors">
+              <button type="button" onClick={() => setShowModal(false)} className="flex-1 py-2.5 border border-[#DFDFDF] rounded text-sm font-medium text-[#484848] hover:bg-[#F5F5F5] transition-colors">
                 ยกเลิก
               </button>
-              <button type="button" onClick={handleSave} disabled={saving} className="flex-1 py-2.5 bg-blue-700 text-white rounded-xl text-sm font-bold hover:bg-blue-800 disabled:opacity-60 transition-colors">
+              <button type="button" onClick={handleSave} disabled={saving} className="flex-1 py-2.5 bg-[#003399] text-white rounded text-sm font-bold hover:bg-[#002B80] disabled:opacity-60 transition-colors">
                 {saving ? "กำลังบันทึก..." : editId ? "บันทึกการแก้ไข" : "เพิ่มวิธีชำระเงิน"}
               </button>
             </div>
